@@ -1,0 +1,20 @@
+.profile__job {
+  font-size: 18px;
+  line-height: 22px;
+  /* identical to box height */
+  color: #ffffff;
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  width: 100%;
+}
+
+@media only screen and (max-width: 650px) {
+  .profile__job {
+    text-align: center;
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

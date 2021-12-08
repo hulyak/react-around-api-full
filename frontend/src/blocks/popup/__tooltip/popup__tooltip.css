@@ -1,0 +1,8 @@
+.popup__tooltip{
+  background: #FFFFFF;
+  border-radius: 10px;
+  padding: 0;
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+  margin: 60px auto 60px;
+}

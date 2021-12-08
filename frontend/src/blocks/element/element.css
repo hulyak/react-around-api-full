@@ -1,0 +1,13 @@
+.element {
+  border-radius: 10px;
+  background-color: #fff;
+  max-width: 282px;
+  position: relative;
+}
+
+@media only screen and (max-width: 515px) {
+  .element {
+    width: 100%;
+    margin: 0 auto;
+  }
+}

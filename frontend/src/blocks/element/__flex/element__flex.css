@@ -1,0 +1,7 @@
+.element__flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 25px auto 31px;
+  max-width: 80%;
+}
