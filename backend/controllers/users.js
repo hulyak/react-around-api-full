@@ -25,7 +25,7 @@ const getUser = (req, res, next) =>
     .catch(next);
 
 const createUser = (req, res, next) => {
-  const { name, about, avatar, email, password, verifyPassword } = req.body;
+  const { name, about, avatar, email, password } = req.body;
 
   if (!email || !password) {
     throw new BadRequestError("Email or password is missing");
@@ -43,7 +43,6 @@ const createUser = (req, res, next) => {
           about,
           avatar,
           email,
-          verifyPassword,
         })
       )
       .then(() =>
@@ -90,6 +89,10 @@ const updateAvatar = (req, res, next) => {
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
+
+  if (!email || !password) {
+    throw new BadRequestError("Email or password is missing");
+  }
 
   User.findUserByCredentials({ email, password })
     .select("+password")
