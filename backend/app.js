@@ -1,11 +1,15 @@
+/* eslint-disable comma-dangle */
 require("dotenv").config();
-const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
+const { celebrate, Joi, errors } = require("celebrate");
+const cors = require("cors");
 const helmet = require("helmet");
-const { auth } = require("./middleware/auth");
+const { requestLogger, errorLogger } = require("./middlewares/logger");
+const { auth } = require("./middlewares/auth");
 const users = require("./routes/users");
 const { login, createUser } = require("./controllers/users");
+const NotFoundError = require("./errors/not-found-err");
 
 const app = express();
 
@@ -16,24 +20,55 @@ mongoose.connect("mongodb://localhost:27017/aroundb");
 app.use(express.json()); // body parser
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
+app.use(cors());
+
 app.use(helmet());
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(requestLogger); // enabling the request logger
 
-// some routes don't require auth
-// for example, register and login
-app.use("/users", users);
+app.post(
+  "/signin",
+  celebrate({
+    body: Joi.object()
+      .keys({
+        email: Joi.string().required().email(),
+        password: Joi.string().required().min(8),
+      })
+      .unknown(true),
+  }),
+  login
+);
 
-app.post("/signin", login);
-app.post("/signup", createUser);
+app.post(
+  "/signup",
+  celebrate({
+    body: Joi.object()
+      .keys({
+        email: Joi.string().required().email(),
+        password: Joi.string().required().min(8),
+      })
+      .unknown(true),
+  }),
+  createUser
+);
 
 // authorization
 app.use(auth);
-
+// some routes don't require auth
+// for example, register and login
+app.use("/users", users);
 // these routes need auth
 app.use("/cards", require("./routes/cards"));
 
-// global error handling
+// enabling the error logger
+app.use(errorLogger);
+// celebrate errors middleware
+app.use(errors());
+
+app.get("*", () => {
+  throw new NotFoundError("Requested resource not found");
+});
+// centralized error handler
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
   res.status(statusCode).send({

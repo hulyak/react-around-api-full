@@ -2,7 +2,6 @@
 /* eslint-disable comma-dangle */
 /* eslint-disable implicit-arrow-linebreak */
 const bcrypt = require("bcryptjs");
-const { celebrate, Joi } = require("celebrate");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 

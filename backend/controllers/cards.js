@@ -1,7 +1,9 @@
+/* eslint-disable comma-dangle */
 const NotFoundError = require("../errors/not-found-err");
 const Card = require("../models/card");
 
 const getCards = (req, res, next) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
   Card.find({})
     .populate("user")
     .then((cards) => res.status(200).send({ data: cards }))
