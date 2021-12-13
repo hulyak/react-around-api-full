@@ -21,10 +21,17 @@ app.use(express.json()); // body parser
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
 app.use(cors());
+app.options("*", cors()); // enable requests for all routes
 
 app.use(helmet());
 
 app.use(requestLogger); // enabling the request logger
+
+app.get("/crash-test", () => {
+  setTimeout(() => {
+    throw new Error("Server will crash now");
+  }, 0);
+});
 
 app.post(
   "/signin",

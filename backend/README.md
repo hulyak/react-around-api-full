@@ -1,21 +1,22 @@
-# Around the U.S. Back End  
-  
-## Directories  
-  
-`/data` — JSON files to temporarily emulate database integration.  
-  
-`/routes` — routing files.  
+# Around the U.S. Back End
+
+Domain:`hulya.students.nomoreparties.site`
+Api Domain: `api.hulya.students.nomoreparties.site`
+
+## Directories
+
+`/data` — JSON files to temporarily emulate database integration.
+
+`/routes` — routing files.
 
 `/controllers` — request handling files.
 
 `/models` - schema files.
 
-  
-## Running the Project  
-  
-`npm run start` — to launch the server.  
-  
-`npm run dev` — to launch the server with the hot reload feature.  
+## Running the Project
 
-`npx eslint ./`  — to run eslint on the project.
+`npm run start` — to launch the server.
 
+`npm run dev` — to launch the server with the hot reload feature.
+
+`npx eslint ./` — to run eslint on the project.

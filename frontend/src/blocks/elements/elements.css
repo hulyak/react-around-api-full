@@ -1,0 +1,28 @@
+.elements {
+  max-width: 880px;
+  margin: 0 auto 67px;
+}
+
+@media only screen and (max-width: 890px) {
+  .elements {
+    max-width: 700px;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .elements {
+    max-width: 550px;
+  }
+}
+
+@media only screen and (max-width: 515px) {
+  .elements {
+    max-width: 450px;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .elements {
+    margin-bottom: 50px;
+  }
+}
