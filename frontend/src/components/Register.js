@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useHistory, Link } from 'react-router-dom';
 
 const Register = ({ onRegister }) => {
   const history = useHistory();
 
   const [user, setUser] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
+    email: '',
+    password: '',
   });
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      history.push("/");
+    if (localStorage.getItem('token')) {
+      history.push('/');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -24,17 +23,15 @@ const Register = ({ onRegister }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (user.password === user.confirmPassword) {
-      resetForm();
-      onRegister(user.email, user.password);
-    }
+
+    resetForm();
+    onRegister(user.email, user.password);
   };
 
   const resetForm = () => {
     setUser({
-      email: "",
-      password: "",
-      confirmPassword: "",
+      email: '',
+      password: '',
     });
   };
 
@@ -68,7 +65,7 @@ const Register = ({ onRegister }) => {
             className="register__input"
           />
         </label>
-        <label htmlFor="confirmPassword" className="register__form-field">
+        {/* <label htmlFor="confirmPassword" className="register__form-field">
           <input
             id="confirmPassword"
             name="confirmPassword"
@@ -81,7 +78,7 @@ const Register = ({ onRegister }) => {
             placeholder="Confirm Password"
             className="register__input"
           />
-        </label>
+        </label> */}
 
         <button type="submit" className="register__button">
           Sign up
