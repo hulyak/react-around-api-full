@@ -43,11 +43,6 @@ const userSchema = new Schema(
       minlength: 5,
       select: false,
     },
-    verifyPassword: {
-      type: String,
-      required: true,
-      minlength: 5,
-    },
   },
   { versionKey: false }
 );
