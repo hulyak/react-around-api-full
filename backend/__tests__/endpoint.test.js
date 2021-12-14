@@ -1,6 +1,7 @@
 const supertest = require("supertest");
-const app = require("../app");
 const mongoose = require("mongoose");
+const app = require("../app");
+
 const User = require("../models/user");
 const fixtures = require("../fixtures");
 

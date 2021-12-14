@@ -30,7 +30,7 @@ class Api {
 
   addCard({ name, link }) {
     return fetch(`${this._baseUrl}/cards`, {
-      method: "POST",
+      method: 'POST',
       headers: this._headers,
       body: JSON.stringify({ name, link }),
     }).then(this._handleResponse);
@@ -39,7 +39,7 @@ class Api {
   setUserInfo({ name, about }) {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-      method: "PATCH",
+      method: 'PATCH',
       body: JSON.stringify({ name, about }),
     }).then(this._handleResponse);
   }
@@ -52,7 +52,7 @@ class Api {
   setUserAvatar(avatar) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       headers: this._headers,
-      method: "PATCH",
+      method: 'PATCH',
       body: JSON.stringify({ avatar }),
     }).then(this._handleResponse);
   }
@@ -66,14 +66,14 @@ class Api {
   addLike(cardId) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       headers: this._headers,
-      method: "PUT",
+      method: 'PUT',
     }).then(this._handleResponse);
   }
 
   deleteLike(cardId) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       headers: this._headers,
-      method: "DELETE",
+      method: 'DELETE',
     }).then(this._handleResponse);
   }
 
@@ -90,20 +90,20 @@ class Api {
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       headers: this._headers,
-      method: "DELETE",
+      method: 'DELETE',
     }).then(this._handleResponse);
   }
 }
 
-const TOKEN = "6af9648e-23ea-4651-bc48-5ca8b1b3f30e";
-const GROUP_ID = "group-10";
+const TOKEN = '6af9648e-23ea-4651-bc48-5ca8b1b3f30e';
+const GROUP_ID = 'group-10';
 
 //  export instance of Api
 const api = new Api({
   baseUrl: `https://around.nomoreparties.co/v1/${GROUP_ID}`,
   headers: {
     authorization: TOKEN,
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 });
 

@@ -1,28 +1,28 @@
-import { useEffect, useState } from "react";
-import { Switch, Route, Redirect, useHistory } from "react-router-dom";
-import Header from "./Header";
-import ImagePopup from "./ImagePopup";
-import Main from "./Main";
-import PopupWithForm from "./PopupWithForm";
-import EditProfilePopup from "./EditProfilePopup";
-import EditAvatarPopup from "./EditAvatarPopup";
-import AddPlacePopup from "./AddPlacePopup";
-import ProtectedRoute from "./ProtectedRoute";
-import InfoTooltip from "./InfoTooltip";
-import Register from "./Register";
-import Login from "./Login";
-import * as auth from "../utils/auth";
-import api from "../utils/api";
-import avatar from "../images/avatar.png";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { useEffect, useState } from 'react';
+import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
+import Header from './Header';
+import ImagePopup from './ImagePopup';
+import Main from './Main';
+import PopupWithForm from './PopupWithForm';
+import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
+import ProtectedRoute from './ProtectedRoute';
+import InfoTooltip from './InfoTooltip';
+import Register from './Register';
+import Login from './Login';
+import * as auth from '../utils/auth';
+import api from '../utils/api';
+import avatar from '../images/avatar.png';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function App() {
   const history = useHistory();
 
   // Context for Current User
   const [currentUser, setCurrentUser] = useState({
-    name: "",
-    about: "",
+    name: '',
+    about: '',
     avatar: avatar,
   });
 
@@ -61,7 +61,7 @@ function App() {
 
   // Authentication and Authorization
   const [loggedIn, setLoggedIn] = useState(true);
-  const [userEmail, setUserEmail] = useState("");
+  const [userEmail, setUserEmail] = useState('');
   const [isSucceeded, setIsSucceeded] = useState(false);
 
   useEffect(() => {
@@ -75,7 +75,7 @@ function App() {
       .then((res) => {
         if (res) {
           setIsSucceeded(true);
-          history.push("/signin");
+          history.push('/signin');
         } else {
           setIsSucceeded(false);
         }
@@ -87,7 +87,7 @@ function App() {
   // if the user has a token in localStorage,
   // this function will check that the user has a valid token
   const handleTokenCheck = () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token) {
       auth
         .checkToken(token)
@@ -95,7 +95,7 @@ function App() {
           setLoggedIn(true);
           setUserEmail(res.data.email);
           setIsSucceeded(true);
-          history.push("/");
+          history.push('/');
         })
         .catch((err) => console.error(err));
     } else {
@@ -121,21 +121,21 @@ function App() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     setLoggedIn(false);
-    setUserEmail("");
-    history.push("/signin");
+    setUserEmail('');
+    history.push('/signin');
   };
 
   useEffect(() => {
     const closeByEscape = (e) => {
-      if (e.key === "Escape") {
+      if (e.key === 'Escape') {
         closeAllPopups();
       }
     };
-    document.addEventListener("keydown", closeByEscape);
+    document.addEventListener('keydown', closeByEscape);
     return () => {
-      document.removeEventListener("keydown", closeByEscape);
+      document.removeEventListener('keydown', closeByEscape);
     };
   }, []);
 
