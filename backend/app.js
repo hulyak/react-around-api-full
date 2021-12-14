@@ -39,7 +39,7 @@ app.post(
     body: Joi.object()
       .keys({
         email: Joi.string().required().email(),
-        password: Joi.string().required().min(8),
+        password: Joi.string().required().min(5),
       })
       .unknown(true),
   }),
@@ -52,7 +52,7 @@ app.post(
     body: Joi.object()
       .keys({
         email: Joi.string().required().email(),
-        password: Joi.string().required().min(8),
+        password: Joi.string().required().min(5),
       })
       .unknown(true),
   }),
