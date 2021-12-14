@@ -64,6 +64,8 @@ function App() {
   const [userEmail, setUserEmail] = useState('');
   const [isSucceeded, setIsSucceeded] = useState(false);
 
+  const [token, setToken] = useState('');
+
   useEffect(() => {
     handleTokenCheck();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -87,14 +89,15 @@ function App() {
   // if the user has a token in localStorage,
   // this function will check that the user has a valid token
   const handleTokenCheck = () => {
-    const token = localStorage.getItem('token');
-    if (token) {
+    const jwt = localStorage.getItem('token');
+    if (jwt) {
       auth
-        .checkToken(token)
+        .checkToken(jwt)
         .then((res) => {
           setLoggedIn(true);
           setUserEmail(res.data.email);
           setIsSucceeded(true);
+          setToken(jwt);
           history.push('/');
         })
         .catch((err) => console.error(err));
@@ -141,14 +144,16 @@ function App() {
 
   // load the project with cards and user information
   useEffect(() => {
-    api
-      .getAppInfo()
-      .then(([userData, cards]) => {
-        setCurrentUser(userData);
-        setCards(cards);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    if (token) {
+      api
+        .getAppInfo()
+        .then(([userData, cards]) => {
+          setCurrentUser(userData);
+          setCards(cards);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [token]);
 
   // API CALLS
   const handleCardLike = (card) => {
