@@ -17,11 +17,16 @@ const getUsers = (req, res) =>
     .catch((err) => res.status(500).send({ message: err.message }));
 
 const getUser = (req, res, next) =>
-  User.findById(req.params.id)
+  User.findById(req.user._id)
     .orFail(() => {
       throw new NotFoundError("User not found");
     })
-    .then((user) => res.status(200).send({ data: user }))
+    .then((user) => {
+      const {
+        _doc: { ...props },
+      } = user;
+      res.status(200).send({ data: props });
+    })
     .catch(next);
 
 const createUser = (req, res, next) => {
@@ -47,6 +52,7 @@ const createUser = (req, res, next) => {
       )
       .then(() =>
         res.status(201).send({
+          _id: user._id,
           name: user.name,
           about: user.about,
           avatar: user.avatar,
@@ -83,7 +89,12 @@ const updateAvatar = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError("User not found");
     })
-    .then((user) => res.status(200).send(user))
+    .then((user) => {
+      const {
+        _doc: { ...props },
+      } = user;
+      res.status(200).send({ data: props });
+    })
     .catch(next);
 };
 
@@ -108,6 +119,10 @@ const login = (req, res, next) => {
           expiresIn: "7d",
         }
       );
+      res.cookie("jwt", token, {
+        maxAge: 3600000 * 24 * 7,
+        httpOnly: true,
+      });
       res.send({ token });
     })
     .catch(next);
