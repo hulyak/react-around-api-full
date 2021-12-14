@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 const jwt = require("jsonwebtoken");
 
 const { JWT_SECRET } = process.env;
@@ -30,7 +31,7 @@ const auth = (req, res, next) => {
 
 const isValidPassword = (password) => {
   const passwordRegex =
-    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{5,}$/;
   return passwordRegex.test(password);
 };
 

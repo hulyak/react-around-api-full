@@ -1,7 +1,11 @@
+/* eslint-disable comma-dangle */
+/* eslint-disable no-undef */
+/* eslint-disable import/no-unresolved */
 const {
   isValidEmail,
   isValidPassword,
   validateUserInput,
+  // eslint-disable-next-line import/extensions
 } = require("../middleware/auth");
 
 const dataValid = { email: "bob@yandex.com", password: "1amAp0k3m0n%" };

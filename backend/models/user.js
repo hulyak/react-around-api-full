@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const isEmail = require("validator/lib/isEmail");
@@ -39,13 +40,13 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
-      minlength: 8,
+      minlength: 5,
       select: false,
     },
     verifyPassword: {
       type: String,
       required: true,
-      minlength: 8,
+      minlength: 5,
     },
   },
   { versionKey: false }

@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 const mongoose = require("mongoose");
 
 const cardsSchema = new mongoose.Schema({
@@ -17,6 +18,7 @@ const cardsSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (v) =>
+        // eslint-disable-next-line implicit-arrow-linebreak
         /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))?)/gm.test(
           v
         ),

@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable function-paren-newline */
 /* eslint-disable comma-dangle */
 /* eslint-disable implicit-arrow-linebreak */

@@ -1,3 +1,7 @@
+/* eslint-disable object-curly-newline */
+/* eslint-disable quotes */
+/* eslint-disable no-undef */
+/* eslint-disable arrow-body-style */
 const supertest = require("supertest");
 const mongoose = require("mongoose");
 const app = require("../app");
