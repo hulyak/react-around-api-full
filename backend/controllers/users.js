@@ -43,40 +43,6 @@ const getCurrentUser = (req, res, next) => {
     .catch(next);
 };
 
-const createUser = (req, res, next) => {
-  const { name, about, avatar, email, password } = req.body;
-
-  if (!email || !password) {
-    throw new BadRequestError("Email or password is missing");
-  }
-
-  return User.findOne({ email }).then((user) => {
-    if (user) throw new BadRequestError("User already exists");
-
-    bcrypt
-      .hash(password, 10)
-      .then((hash) =>
-        User.create({
-          password: hash,
-          name,
-          about,
-          avatar,
-          email,
-        })
-      )
-      .then(() =>
-        res.status(201).send({
-          _id: user._id,
-          name: user.name,
-          about: user.about,
-          avatar: user.avatar,
-          email: user.email,
-        })
-      )
-      .catch(next);
-  });
-};
-
 const updateProfile = (req, res, next) => {
   const { name, about } = req.body;
 
@@ -110,6 +76,43 @@ const updateAvatar = (req, res, next) => {
       res.status(200).send({ data: props });
     })
     .catch(next);
+};
+
+// Authentication
+const createUser = (req, res, next) => {
+  const { name, about, avatar, email, password } = req.body;
+
+  if (!email || !password) {
+    throw new BadRequestError("Email or password is missing");
+  }
+
+  return User.findOne({ email })
+    .select("+password")
+    .then((user) => {
+      if (user) throw new BadRequestError("User already exists");
+
+      bcrypt
+        .hash(password, 10)
+        .then((hash) =>
+          User.create({
+            password: hash,
+            name,
+            about,
+            avatar,
+            email,
+          })
+        )
+        .then(() =>
+          res.status(201).send({
+            _id: user._id,
+            name: user.name,
+            about: user.about,
+            avatar: user.avatar,
+            email: user.email,
+          })
+        )
+        .catch(next);
+    });
 };
 
 const login = (req, res, next) => {
