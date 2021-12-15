@@ -1,7 +1,7 @@
 /* eslint-disable operator-linebreak */
 const jwt = require("jsonwebtoken");
 
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET = "dev" } = process.env;
 const UnauthorizedError = require("../errors/unauthorized-err");
 
 const extractBearerToken = (header) => header.replace("Bearer ", "");

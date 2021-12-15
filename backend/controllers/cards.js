@@ -1,4 +1,5 @@
 /* eslint-disable comma-dangle */
+const ForbiddenError = require("../errors/forbidden-err");
 const NotFoundError = require("../errors/not-found-err");
 const Card = require("../models/card");
 
@@ -27,7 +28,12 @@ const deleteCard = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError("No card found with that id");
     })
-    .then((card) => res.status(200).send(card))
+    .then((card) => {
+      if (!card.owner._id !== req.user._id) {
+        throw new ForbiddenError("You are not the owner of this card");
+      }
+      res.status(200).send(card);
+    })
     .catch(next);
 };
 
@@ -42,7 +48,12 @@ const likeCard = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError("No card found with that id");
     })
-    .then((card) => res.status(200).send({ data: card }))
+    .then((card) => {
+      const {
+        _doc: { ...props },
+      } = card;
+      res.status(200).send({ data: props });
+    })
     .catch(next);
 };
 
@@ -57,7 +68,12 @@ const deleteLikeCard = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError("No card found with that id");
     })
-    .then((card) => res.status(200).send({ data: card }))
+    .then((card) => {
+      const {
+        _doc: { ...props },
+      } = card;
+      res.status(200).send({ data: props });
+    })
     .catch(next);
 };
 

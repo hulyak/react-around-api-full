@@ -1,8 +1,5 @@
 # Around the U.S. Back End
 
-Domain:`hulya.students.nomoreparties.site`
-Api Domain: `api.hulya.students.nomoreparties.site`
-
 ## Directories
 
 `/data` — JSON files to temporarily emulate database integration.

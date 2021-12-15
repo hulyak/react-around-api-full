@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const { celebrate, Joi, errors } = require("celebrate");
 const cors = require("cors");
 const helmet = require("helmet");
+const rateLimit = require("express-rate-limit"); // rate-limiting middleware for Express
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 const { auth } = require("./middlewares/auth");
 const users = require("./routes/users");
@@ -26,6 +27,13 @@ app.options("*", cors()); // enable requests for all routes
 app.use(helmet());
 
 app.use(requestLogger); // enabling the request logger
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+});
+
+app.use(limiter);
 
 app.get("/crash-test", () => {
   setTimeout(() => {

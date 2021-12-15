@@ -11,10 +11,10 @@ const NotFoundError = require("../errors/not-found-err");
 const UnauthorizedError = require("../errors/unauthorized-err");
 const BadRequestError = require("../errors/bad-request-err");
 
-const getUsers = (req, res) =>
+const getUsers = (req, res, next) =>
   User.find({})
     .then((users) => res.status(200).send({ data: users }))
-    .catch((err) => res.status(500).send({ message: err.message }));
+    .catch(next);
 
 const getUser = (req, res, next) =>
   User.findById(req.user._id)
@@ -28,6 +28,20 @@ const getUser = (req, res, next) =>
       res.status(200).send({ data: props });
     })
     .catch(next);
+
+const getCurrentUser = (req, res, next) => {
+  User.findById(req.user._id)
+    .orFail(() => {
+      throw new NotFoundError("User not found");
+    })
+    .then((user) => {
+      const {
+        _doc: { ...props },
+      } = user;
+      res.status(200).send({ data: props });
+    })
+    .catch(next);
+};
 
 const createUser = (req, res, next) => {
   const { name, about, avatar, email, password } = req.body;
@@ -135,4 +149,5 @@ module.exports = {
   updateProfile,
   updateAvatar,
   login,
+  getCurrentUser,
 };
