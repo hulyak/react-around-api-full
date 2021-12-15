@@ -1,7 +1,8 @@
+/* eslint-disable comma-dangle */
 /* eslint-disable operator-linebreak */
 const jwt = require("jsonwebtoken");
 
-const { JWT_SECRET = "dev" } = process.env;
+const { JWT_SECRET, NODE_ENV } = process.env;
 const UnauthorizedError = require("../errors/unauthorized-err");
 
 const extractBearerToken = (header) => header.replace("Bearer ", "");
@@ -13,6 +14,7 @@ const auth = (req, res, next) => {
   // let's check the header exists and starts with 'Bearer '
   if (!authorization || !authorization.startsWith("Bearer ")) {
     next(new UnauthorizedError("You are not authorized"));
+    return;
   }
   // if the token is valid, we can set the user on the request
   const token = extractBearerToken(authorization);
@@ -20,7 +22,10 @@ const auth = (req, res, next) => {
 
   try {
     // verifying the token
-    payload = jwt.verify(token, JWT_SECRET);
+    payload = jwt.verify(
+      token,
+      NODE_ENV === "production" ? JWT_SECRET : "dev-secret"
+    );
   } catch (error) {
     next(new UnauthorizedError("You are not authorized"));
   }

@@ -75,22 +75,34 @@ app.use("/users", users);
 // these routes need auth
 app.use("/cards", require("./routes/cards"));
 
+app.get("*", () => {
+  throw new NotFoundError("Requested resource not found");
+});
+
 // enabling the error logger
 app.use(errorLogger);
 // celebrate errors middleware
 app.use(errors());
 
-app.get("*", () => {
-  throw new NotFoundError("Requested resource not found");
-});
 // centralized error handler
+// app.use((err, req, res, next) => {
+//   const { statusCode = 500, message } = err;
+//   res.status(statusCode).send({
+//     // check the status and display a message based on it
+//     message: statusCode === 500 ? "An error occurred on the server" : message,
+//   });
+//   next(new Error(message));
+// });
+
 app.use((err, req, res, next) => {
-  const { statusCode = 500, message } = err;
-  res.status(statusCode).send({
-    // check the status and display a message based on it
-    message: statusCode === 500 ? "An error occurred on the server" : message,
-  });
-  next(new Error(message));
+  let { statusCode = 500 } = err;
+  if (err.name === "ValidationError") statusCode = 400;
+  else if (err.name === "MongoError" && err.code === 11000) statusCode = 409;
+  else if (err.name === "Error") statusCode = 401;
+
+  const { message = "An error occurred on the server" } = err;
+
+  res.status(statusCode).send({ message });
 });
 
 if (process.env.NODE_ENV !== "test") {
