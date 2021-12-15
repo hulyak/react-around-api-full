@@ -5,8 +5,6 @@ const jwt = require("jsonwebtoken");
 const { JWT_SECRET, NODE_ENV } = process.env;
 const UnauthorizedError = require("../errors/unauthorized-err");
 
-const extractBearerToken = (header) => header.replace("Bearer ", "");
-
 const auth = (req, res, next) => {
   // getting authorization from the header
   const { authorization } = req.headers;
@@ -17,7 +15,7 @@ const auth = (req, res, next) => {
     return;
   }
   // if the token is valid, we can set the user on the request
-  const token = extractBearerToken(authorization);
+  const token = authorization.replace("Bearer ", "");
   let payload;
 
   try {
