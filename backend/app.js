@@ -28,12 +28,12 @@ app.use(helmet());
 
 app.use(requestLogger); // enabling the request logger
 
-// const limiter = rateLimit({
-//   windowMs: 15 * 60 * 1000, // 15 minutes
-//   max: 1000, // limit each IP to 100 requests per windowMs
-// });
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 1000, // limit each IP to 100 requests per windowMs
+});
 
-// app.use(limiter);
+app.use(limiter);
 
 app.get("/crash-test", () => {
   setTimeout(() => {
