@@ -116,15 +116,15 @@ const createUser = (req, res, next) => {
 const login = (req, res, next) => {
   const { email, password } = req.body;
 
-  if (!email || !password) {
-    throw new BadRequestError("Email or password is missing");
-  }
+  // if (!email || !password) {
+  //   throw new BadRequestError("Email or password is missing");
+  // }
 
-  User.findUserByCredentials({ email, password })
-    .orFail(() => {
-      throw new UnauthorizedError("Invalid email or password");
-    })
+  User.findUserByCredentials(email, password)
     .then((user) => {
+      if (!user) {
+        throw new UnauthorizedError("Invalid email or password");
+      }
       // if the password is correct, we create a token
       const token = jwt.sign(
         { _id: user._id },
