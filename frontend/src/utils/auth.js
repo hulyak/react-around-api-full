@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.hulya.students.nomoreparties.site';
+export const BASE_URL = 'https://api.hulyak.students.nomoreparties.site';
 
 const handleResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);

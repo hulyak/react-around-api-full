@@ -95,16 +95,16 @@ class Api {
   }
 }
 
-const TOKEN = '6af9648e-23ea-4651-bc48-5ca8b1b3f30e';
-const GROUP_ID = 'group-10';
+// const TOKEN = '6af9648e-23ea-4651-bc48-5ca8b1b3f30e';
+// const GROUP_ID = 'group-10';
 
-//  export instance of Api
-const api = new Api({
-  baseUrl: `https://around.nomoreparties.co/v1/${GROUP_ID}`,
-  headers: {
-    authorization: TOKEN,
-    'Content-Type': 'application/json',
-  },
-});
+// //  export instance of Api
+// const api = new Api({
+//   baseUrl: `https://around.nomoreparties.co/v1/${GROUP_ID}`,
+//   headers: {
+//     authorization: TOKEN,
+//     'Content-Type': 'application/json',
+//   },
+// });
 
-export default api;
+export default Api;

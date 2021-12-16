@@ -12,7 +12,7 @@ import InfoTooltip from './InfoTooltip';
 import Register from './Register';
 import Login from './Login';
 import * as auth from '../utils/auth';
-import api from '../utils/api';
+import Api from '../utils/api';
 import avatar from '../images/avatar.png';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -70,6 +70,14 @@ function App() {
     handleTokenCheck();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const api = new Api({
+    baseUrl: 'https://api.hulyak.students.nomoreparties.site',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  });
 
   const handleRegister = (email, password) => {
     auth
