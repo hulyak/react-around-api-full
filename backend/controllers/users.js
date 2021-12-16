@@ -100,13 +100,13 @@ const createUser = (req, res, next) => {
           email,
         })
       )
-      .then(() =>
+      .then((newUser) =>
         res.status(201).send({
-          _id: user._id,
-          name: user.name,
-          about: user.about,
-          avatar: user.avatar,
-          email: user.email,
+          _id: newUser._id,
+          name: newUser.name,
+          about: newUser.about,
+          avatar: newUser.avatar,
+          email: newUser.email,
         })
       )
       .catch(next);
