@@ -10,12 +10,11 @@ const {
   deleteLikeCard,
 } = require("../controllers/cards");
 
-const validateUrl = (value) => {
-  const result = validator.isURL(value);
-  if (result) {
+const validateURL = (value, helpers) => {
+  if (validator.isURL(value)) {
     return value;
   }
-  throw new Error("URL validation error");
+  return helpers.error("string.uri");
 };
 
 cardsRouter.get("/", getCards);
@@ -24,7 +23,7 @@ cardsRouter.post(
   celebrate({
     body: Joi.object().keys({
       name: Joi.string().required().min(2).max(30),
-      link: Joi.string().required().custom(validateUrl),
+      link: Joi.string().required().custom(validateURL),
     }),
   }),
   createCard

@@ -24,12 +24,11 @@ usersRouter.patch(
   updateProfile
 );
 
-const validateUrl = (value) => {
-  const result = validator.isURL(value);
-  if (result) {
+const validateURL = (value, helpers) => {
+  if (validator.isURL(value)) {
     return value;
   }
-  throw new Error("URL validation error");
+  return helpers.error("string.uri");
 };
 
 usersRouter.get(
@@ -46,7 +45,7 @@ usersRouter.patch(
   "/me/avatar",
   celebrate({
     body: Joi.object().keys({
-      avatar: Joi.string().required().custom(validateUrl),
+      avatar: Joi.string().required().custom(validateURL),
     }),
   }),
   updateAvatar
