@@ -1,5 +1,5 @@
 class Api {
-  constructor({ baseUrl, headers, apiKey }) {
+  constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
     this._headers = headers;
   }
@@ -64,14 +64,14 @@ class Api {
    * @returns Promise<Response>
    */
   addLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       headers: this._headers,
       method: 'PUT',
     }).then(this._handleResponse);
   }
 
   deleteLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       headers: this._headers,
       method: 'DELETE',
     }).then(this._handleResponse);
@@ -98,7 +98,7 @@ class Api {
 // const TOKEN = '6af9648e-23ea-4651-bc48-5ca8b1b3f30e';
 // const GROUP_ID = 'group-10';
 
-// //  export instance of Api
+//  export instance of Api
 // const api = new Api({
 //   baseUrl: `https://around.nomoreparties.co/v1/${GROUP_ID}`,
 //   headers: {

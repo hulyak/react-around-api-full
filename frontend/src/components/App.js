@@ -202,31 +202,31 @@ function App() {
       .catch((err) => console.error(err));
   };
 
-  const handleUpdateUser = ({ name, about }) => {
+  const handleUpdateUser = (userData) => {
     api
-      .setUserInfo({ name, about })
+      .setUserInfo({ ...userData })
       .then((userData) => {
-        setCurrentUser({ name, about, ...userData });
+        setCurrentUser({ ...userData.data });
         closeAllPopups();
       })
       .catch((err) => console.error(err));
   };
 
-  const handleUpdateAvatar = (avatar) => {
+  const handleUpdateAvatar = ({ avatar }) => {
     api
-      .setUserAvatar(avatar)
+      .setUserAvatar({ avatar })
       .then((userData) => {
-        setCurrentUser({ avatar, ...userData });
+        setCurrentUser({ ...userData.data });
         closeAllPopups();
       })
       .catch((err) => console.error(err));
   };
 
-  const handleAddPlaceSubmit = ({ name, link }) => {
+  const handleAddPlaceSubmit = (place) => {
     api
-      .addCard({ name, link })
+      .addCard({ ...place })
       .then((card) => {
-        setCards([card, ...cards]);
+        setCards([card.data, ...cards]);
         closeAllPopups();
       })
       .catch((err) => console.error(err));
