@@ -65,7 +65,10 @@ function App() {
   const api = useMemo(
     () =>
       new Api({
-        baseUrl: 'https://api.hulyak.students.nomoreparties.site',
+        baseUrl:
+          process.env.NODE_ENV === 'production'
+            ? 'https://api.hulyak.students.nomoreparties.site'
+            : 'http://localhost:3000',
         headers: {
           Authorization: `Bearer ${jwt}`,
           'Content-Type': 'application/json',
@@ -170,7 +173,7 @@ function App() {
           console.log(err);
         });
     }
-  }, [jwt, api]);
+  }, [jwt, api, CurrentUserContext]);
 
   // API CALLS
   const handleCardLike = (card) => {
