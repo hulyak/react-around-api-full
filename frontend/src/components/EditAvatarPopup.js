@@ -8,7 +8,7 @@ const EditAvatarPopup = ({ isOpen, onClose, onUpdateAvatar }) => {
     e.preventDefault();
     const avatar = avatarRef.current.value;
 
-    onUpdateAvatar({ avatar });
+    onUpdateAvatar(avatar);
   };
 
   return (
