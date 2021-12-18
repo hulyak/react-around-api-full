@@ -17,16 +17,14 @@ const getUsers = (req, res, next) =>
     .catch(next);
 
 const getUser = (req, res, next) =>
-  User.findById(req.user._id)
+  User.findById(req.params._id)
 
     .then((user) => {
       if (!user) {
         throw new NotFoundError("User not found");
       }
-      const {
-        _doc: { ...props },
-      } = user;
-      res.status(200).send({ data: props });
+
+      res.status(200).send({ data: user });
     })
     .catch(next);
 
@@ -37,10 +35,7 @@ const getCurrentUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError("User not found");
       }
-      const {
-        _doc: { ...props },
-      } = user;
-      res.status(200).send({ data: props });
+      res.status(200).send({ user });
     })
     .catch(next);
 };
@@ -76,10 +71,8 @@ const updateAvatar = (req, res, next) => {
       if (!user) {
         throw new NotFoundError("User not found");
       }
-      const {
-        _doc: { ...props },
-      } = user;
-      res.status(200).send({ data: props });
+
+      res.status(200).send({ data: user });
     })
     .catch(next);
 };

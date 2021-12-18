@@ -54,10 +54,8 @@ const likeCard = (req, res, next) => {
       if (!card) {
         throw new NotFoundError("No card found with that id");
       }
-      const {
-        _doc: { ...props },
-      } = card;
-      res.status(200).send(props);
+
+      res.status(200).send(card);
     })
     .catch(next);
 };
@@ -75,10 +73,8 @@ const deleteLikeCard = (req, res, next) => {
       if (!card) {
         throw new NotFoundError("No card found with that id");
       }
-      const {
-        _doc: { ...props },
-      } = card;
-      res.status(200).send({ data: props });
+
+      res.status(200).send(card);
     })
     .catch(next);
 };
