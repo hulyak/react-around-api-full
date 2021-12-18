@@ -1,14 +1,14 @@
-import { useContext, useEffect, useState } from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import PopupWithForm from "./PopupWithForm";
+import { useContext, useEffect, useState } from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import PopupWithForm from './PopupWithForm';
 
 const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
   // show the current user's info from the context
   const currentUser = useContext(CurrentUserContext);
 
   const [formFields, setFormFields] = useState({
-    name: "",
-    about: "",
+    name: '',
+    about: '',
   });
 
   const { name, about } = formFields;
@@ -29,8 +29,8 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Pass the values of the managed components to the external handler
-    onUpdateUser(formFields);
-    setFormFields({ name: "", link: "" });
+    onUpdateUser({ formFields });
+    setFormFields({ name: '', link: '' });
   };
 
   return (
@@ -52,7 +52,7 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
           maxLength="40"
           id="name-input"
           required
-          value={name || ""}
+          value={name || ''}
           onChange={handleChange}
         />
         <span className="popup__input-error name-input-error" />
@@ -67,7 +67,7 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
           maxLength="200"
           id="job-input"
           required
-          value={about || ""}
+          value={about || ''}
           onChange={handleChange}
         />
         <span className="popup__input-error job-input-error" />
