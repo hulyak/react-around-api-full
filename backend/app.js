@@ -20,19 +20,6 @@ mongoose.connect("mongodb://localhost:27017/aroundb");
 app.use(express.json()); // body parser
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
-app.use((req, res, next) => {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://hulyak.students.nomoreparties.site/"
-  );
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
-  next();
-});
-
 app.use(cors());
 app.options("*", cors()); // enable requests for all routes
 
