@@ -156,9 +156,10 @@ function App() {
   useEffect(() => {
     if (jwt) {
       api
-        .getUserData()
+        .getUserData(jwt)
         .then((res) => {
           setCurrentUser(res.data);
+          console.log('user', res.data);
         })
         .catch((err) => {
           console.log(err);
