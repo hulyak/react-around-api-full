@@ -61,7 +61,7 @@ const updateProfile = (req, res, next) => {
       const {
         _doc: { ...props },
       } = user;
-      res.status(200).send({ data: props });
+      res.status(200).send({ data: props, ...props });
     })
     .catch(next);
 };
@@ -83,7 +83,7 @@ const updateAvatar = (req, res, next) => {
       const {
         _doc: { ...props },
       } = user;
-      res.status(200).send({ data: props });
+      res.status(200).send({ data: props, ...props });
     })
     .catch(next);
 };

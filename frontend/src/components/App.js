@@ -178,7 +178,7 @@ function App() {
           console.log(err);
         });
     }
-  }, [jwt, api]);
+  }, [jwt, api, CurrentUserContext]);
 
   // API CALLS
   // const handleCardLike = (card) => {
