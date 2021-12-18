@@ -20,11 +20,7 @@ function App() {
   const history = useHistory();
 
   // Context for Current User
-  const [currentUser, setCurrentUser] = useState({
-    name: '',
-    about: '',
-    avatar: avatar,
-  });
+  const [currentUser, setCurrentUser] = useState({});
 
   const [cards, setCards] = useState([]);
 
@@ -175,14 +171,14 @@ function App() {
           console.log(err);
         });
     }
-  }, [jwt, api]);
+  }, [jwt, CurrentUserContext]);
 
   // API CALLS
   const handleCardLike = (card) => {
     const isLiked =
       card.likes !== undefined ? card.likes.includes(currentUser._id) : false;
     const handleLike = !isLiked
-      ? api.changeLikeCardStatus(card._id)
+      ? api.addLike(card._id)
       : api.deleteCard(card._id);
 
     // Check one more time if this card was already liked
@@ -204,7 +200,6 @@ function App() {
       .deleteCard(card._id)
       .then(() => {
         setCards((state) => state.filter((c) => c._id !== card._id));
-        closeAllPopups();
       })
       .catch((err) => console.error(err));
   };
@@ -212,19 +207,17 @@ function App() {
   const handleUpdateUser = (userData) => {
     api
       .setUserInfo({ ...userData })
-      .then((userData) => {
-        setCurrentUser({ ...userData.data });
-        closeAllPopups();
+      .then((data) => {
+        setCurrentUser({ ...data.data });
       })
       .catch((err) => console.error(err));
   };
 
-  const handleUpdateAvatar = ({ avatar }) => {
+  const handleUpdateAvatar = (avatar) => {
     api
-      .setUserAvatar({ avatar })
-      .then((userData) => {
-        setCurrentUser({ ...userData.data });
-        closeAllPopups();
+      .setUserAvatar(avatar.avatar)
+      .then((data) => {
+        setCurrentUser({ ...data.data });
       })
       .catch((err) => console.error(err));
   };
@@ -234,7 +227,6 @@ function App() {
       .addCard({ ...place })
       .then((card) => {
         setCards([card.data, ...cards]);
-        closeAllPopups();
       })
       .catch((err) => console.error(err));
   };

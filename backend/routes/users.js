@@ -34,7 +34,7 @@ const validateURL = (value, helpers) => {
 usersRouter.get(
   "/:id",
   celebrate({
-    params: Joi.object().keys({
+    body: Joi.object().keys({
       id: Joi.string().required().hex().length(24),
     }),
   }),

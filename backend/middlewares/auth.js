@@ -16,7 +16,7 @@ const auth = (req, res, next) => {
   }
   // if the token is valid, we can set the user on the request
   const token = authorization.replace("Bearer ", "");
-  console.log("token before verify", token);
+
   let payload;
 
   try {
