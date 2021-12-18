@@ -23,8 +23,10 @@ const getUser = (req, res, next) =>
       if (!user) {
         throw new NotFoundError("User not found");
       }
-
-      res.status(200).send({ data: user });
+      const {
+        _doc: { ...props },
+      } = user;
+      res.status(200).send({ data: props });
     })
     .catch(next);
 
@@ -35,7 +37,10 @@ const getCurrentUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError("User not found");
       }
-      res.status(200).send({ user });
+      const {
+        _doc: { ...props },
+      } = user;
+      res.status(200).send({ data: props });
     })
     .catch(next);
 };
@@ -53,7 +58,10 @@ const updateProfile = (req, res, next) => {
       if (!user) {
         throw new NotFoundError("User not found");
       }
-      res.status(200).send({ data: user });
+      const {
+        _doc: { ...props },
+      } = user;
+      res.status(200).send({ data: props });
     })
     .catch(next);
 };
@@ -72,7 +80,10 @@ const updateAvatar = (req, res, next) => {
         throw new NotFoundError("User not found");
       }
 
-      res.status(200).send({ data: user });
+      const {
+        _doc: { ...props },
+      } = user;
+      res.status(200).send({ data: props });
     })
     .catch(next);
 };
