@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import Header from './Header';
 import ImagePopup from './ImagePopup';
@@ -64,20 +64,24 @@ function App() {
   const [userEmail, setUserEmail] = useState('');
   const [isSucceeded, setIsSucceeded] = useState(false);
 
-  const [token, setToken] = useState('');
+  const [jwt, setJwt] = useState('');
+
+  const api = useMemo(
+    () =>
+      new Api({
+        baseUrl: 'https://api.hulyak.students.nomoreparties.site',
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+          'Content-Type': 'application/json',
+        },
+      }),
+    [jwt]
+  );
 
   useEffect(() => {
     handleTokenCheck();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const api = new Api({
-    baseUrl: 'https://api.hulyak.students.nomoreparties.site',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-  });
 
   const handleRegister = (email, password) => {
     auth
@@ -105,7 +109,7 @@ function App() {
           setLoggedIn(true);
           setUserEmail(res.data.email);
           setIsSucceeded(true);
-          setToken(jwt);
+          setJwt(jwt);
           history.push('/');
         })
         .catch((err) => console.error(err));
@@ -152,16 +156,17 @@ function App() {
 
   // load the project with cards and user information
   useEffect(() => {
-    if (token) {
+    if (jwt) {
       api
         .getAppInfo()
         .then(([userData, cards]) => {
           setCurrentUser(userData);
+          console.log('useEffect', cards);
           setCards(cards);
         })
         .catch((err) => console.log(err));
     }
-  }, [token]);
+  }, [api, jwt]);
 
   // API CALLS
   const handleCardLike = (card) => {

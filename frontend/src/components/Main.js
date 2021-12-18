@@ -1,7 +1,7 @@
-import { useContext } from "react";
-import Card from "./Card";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import Header from "./Header";
+import { useContext } from 'react';
+import Card from './Card';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import Header from './Header';
 
 const Main = ({
   onEditProfileClick,
@@ -15,6 +15,7 @@ const Main = ({
   userEmail,
   onLogoutClick,
 }) => {
+  console.log(cards);
   const currentUser = useContext(CurrentUserContext);
 
   return (
