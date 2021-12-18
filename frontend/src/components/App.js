@@ -60,7 +60,7 @@ function App() {
   const [userEmail, setUserEmail] = useState('');
   const [isSucceeded, setIsSucceeded] = useState(false);
 
-  const [jwt, setJwt] = useState('');
+  const [jwt, setJwt] = useState(localStorage.getItem('token'));
 
   const api = useMemo(
     () =>
@@ -97,7 +97,6 @@ function App() {
   // if the user has a token in localStorage,
   // this function will check that the user has a valid token
   const handleTokenCheck = () => {
-    const jwt = localStorage.getItem('token');
     if (jwt) {
       auth
         .checkToken(jwt)
@@ -171,15 +170,15 @@ function App() {
           console.log(err);
         });
     }
-  }, [jwt, CurrentUserContext]);
+  }, [jwt, api]);
 
   // API CALLS
   const handleCardLike = (card) => {
     const isLiked =
       card.likes !== undefined ? card.likes.includes(currentUser._id) : false;
     const handleLike = !isLiked
-      ? api.addLike(card._id)
-      : api.deleteCard(card._id);
+      ? api.addLike(card._id, jwt)
+      : api.deleteCard(card._id, jwt);
 
     // Check one more time if this card was already liked
     // const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -197,34 +196,34 @@ function App() {
 
   const handleCardDelete = (card) => {
     api
-      .deleteCard(card._id)
+      .deleteCard(card._id, jwt)
       .then(() => {
         setCards((state) => state.filter((c) => c._id !== card._id));
       })
       .catch((err) => console.error(err));
   };
 
-  const handleUpdateUser = (userData) => {
+  const handleUpdateUser = ({ name, about }) => {
     api
-      .setUserInfo({ ...userData })
+      .setUserInfo({ name, about }, jwt)
       .then((data) => {
-        setCurrentUser({ ...data.data });
+        setCurrentUser(data.data);
       })
       .catch((err) => console.error(err));
   };
 
-  const handleUpdateAvatar = (avatar) => {
+  const handleUpdateAvatar = ({ avatar }) => {
     api
-      .setUserAvatar(avatar.avatar)
+      .setUserAvatar(avatar, jwt)
       .then((data) => {
-        setCurrentUser({ ...data.data });
+        setCurrentUser(data.data);
       })
       .catch((err) => console.error(err));
   };
 
-  const handleAddPlaceSubmit = (place) => {
+  const handleAddPlaceSubmit = ({ name, link }) => {
     api
-      .addCard({ ...place })
+      .addCard({ name, link }, jwt)
       .then((card) => {
         setCards([card.data, ...cards]);
       })
