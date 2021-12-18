@@ -179,11 +179,18 @@ function App() {
 
   // API CALLS
   const handleCardLike = (card) => {
+    const isLiked =
+      card.likes !== undefined ? card.likes.includes(currentUser._id) : false;
+    const handleLike = !isLiked
+      ? api.changeLikeCardStatus(card._id)
+      : api.deleteCard(card._id);
+
     // Check one more time if this card was already liked
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    // const isLiked = card.likes.some((i) => i._id === currentUser._id);
     // Send a request to the API and getting the updated card data
-    api
-      .changeLikeCardStatus(card._id, !isLiked)
+    // api
+    // .changeLikeCardStatus(card._id, !isLiked)
+    handleLike
       .then((newCard) => {
         setCards((state) =>
           state.map((c) => (c._id === card._id ? newCard : c))
