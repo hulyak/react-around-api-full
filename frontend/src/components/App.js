@@ -207,16 +207,16 @@ function App() {
     api
       .setUserInfo({ name, about }, jwt)
       .then((data) => {
-        setCurrentUser(data.data);
+        setCurrentUser({ ...data, name, about });
       })
       .catch((err) => console.error(err));
   };
 
-  const handleUpdateAvatar = ({ avatar }) => {
+  const handleUpdateAvatar = (avatar) => {
     api
       .setUserAvatar(avatar, jwt)
       .then((data) => {
-        setCurrentUser(data.data);
+        setCurrentUser({ ...data, avatar });
       })
       .catch((err) => console.error(err));
   };

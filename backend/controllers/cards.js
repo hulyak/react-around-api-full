@@ -25,10 +25,11 @@ const deleteCard = (req, res, next) => {
   const { _id } = req.params;
 
   return Card.findByIdAndRemove(_id)
-    .orFail(() => {
-      throw new NotFoundError("No card found with that id");
-    })
+
     .then((card) => {
+      if (!card) {
+        throw new NotFoundError("No card found with that id");
+      }
       if (!card.owner._id !== req.user._id) {
         throw new ForbiddenError("You are not the owner of this card");
       }
@@ -48,10 +49,11 @@ const likeCard = (req, res, next) => {
     { $addToSet: { likes: req.user_id } },
     { new: true }
   )
-    .orFail(() => {
-      throw new NotFoundError("No card found with that id");
-    })
+
     .then((card) => {
+      if (!card) {
+        throw new NotFoundError("No card found with that id");
+      }
       const {
         _doc: { ...props },
       } = card;
@@ -68,10 +70,11 @@ const deleteLikeCard = (req, res, next) => {
     { $pull: { likes: req.user._id } },
     { new: true }
   )
-    .orFail(() => {
-      throw new NotFoundError("No card found with that id");
-    })
+
     .then((card) => {
+      if (!card) {
+        throw new NotFoundError("No card found with that id");
+      }
       const {
         _doc: { ...props },
       } = card;

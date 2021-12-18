@@ -18,10 +18,11 @@ const getUsers = (req, res, next) =>
 
 const getUser = (req, res, next) =>
   User.findById(req.user._id)
-    .orFail(() => {
-      throw new NotFoundError("User not found");
-    })
+
     .then((user) => {
+      if (!user) {
+        throw new NotFoundError("User not found");
+      }
       const {
         _doc: { ...props },
       } = user;
@@ -31,10 +32,11 @@ const getUser = (req, res, next) =>
 
 const getCurrentUser = (req, res, next) => {
   User.findById(req.user._id)
-    .orFail(() => {
-      throw new NotFoundError("User not found");
-    })
+
     .then((user) => {
+      if (!user) {
+        throw new NotFoundError("User not found");
+      }
       const {
         _doc: { ...props },
       } = user;
@@ -51,10 +53,13 @@ const updateProfile = (req, res, next) => {
     { name, about },
     { new: true, runValidators: true, upsert: false }
   )
-    .orFail(() => {
-      throw new NotFoundError("User not found");
+
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError("User not found");
+      }
+      res.status(200).send({ data: user });
     })
-    .then((user) => res.status(200).send({ data: user }))
     .catch(next);
 };
 
@@ -66,10 +71,11 @@ const updateAvatar = (req, res, next) => {
     { avatar },
     { new: true, runValidators: true, upsert: false }
   )
-    .orFail(() => {
-      throw new NotFoundError("User not found");
-    })
+
     .then((user) => {
+      if (!user) {
+        throw new NotFoundError("User not found");
+      }
       const {
         _doc: { ...props },
       } = user;
