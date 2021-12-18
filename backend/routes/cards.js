@@ -30,7 +30,7 @@ cardsRouter.post(
 );
 
 cardsRouter.delete(
-  "/:cardId",
+  "/:id",
   celebrate({
     params: Joi.object().keys({
       _id: Joi.string().hex().length(24),
@@ -38,8 +38,9 @@ cardsRouter.delete(
   }),
   deleteCard
 );
+
 cardsRouter.put(
-  "/:cardId/likes",
+  "/:id/likes",
   celebrate({
     params: Joi.object().keys({
       _id: Joi.string().hex().length(24),
@@ -49,7 +50,7 @@ cardsRouter.put(
 );
 
 cardsRouter.delete(
-  "/:cardId/likes",
+  "/:id/likes",
   celebrate({
     params: Joi.object().keys({
       _id: Joi.string().hex().length(24), // hex sequence with 24 symbols
