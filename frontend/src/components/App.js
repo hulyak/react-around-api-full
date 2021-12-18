@@ -158,15 +158,24 @@ function App() {
   useEffect(() => {
     if (jwt) {
       api
-        .getAppInfo()
-        .then(([userData, cards]) => {
-          setCurrentUser(userData);
-          console.log('useEffect', cards);
-          setCards(cards);
+        .getUserData()
+        .then((res) => {
+          setCurrentUser(res.data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+        });
+
+      api
+        .getInitialCards()
+        .then((data) => {
+          setCards(data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-  }, [api, jwt]);
+  }, [jwt, api]);
 
   // API CALLS
   const handleCardLike = (card) => {

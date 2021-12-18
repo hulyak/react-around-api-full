@@ -6,7 +6,7 @@ const Card = require("../models/card");
 const getCards = (req, res, next) =>
   // eslint-disable-next-line implicit-arrow-linebreak
   Card.find({})
-    .populate("user")
+    // .populate("user")
     .then((cards) => res.status(200).send({ data: cards }))
     .catch(next);
 
