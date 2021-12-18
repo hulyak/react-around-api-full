@@ -32,7 +32,10 @@ const deleteCard = (req, res, next) => {
       if (!card.owner._id !== req.user._id) {
         throw new ForbiddenError("You are not the owner of this card");
       }
-      res.status(200).send(card);
+      res.status(200).send({
+        data: card,
+        message: "Card deleted",
+      });
     })
     .catch(next);
 };
@@ -52,7 +55,7 @@ const likeCard = (req, res, next) => {
       const {
         _doc: { ...props },
       } = card;
-      res.status(200).send({ data: props });
+      res.status(200).send(props);
     })
     .catch(next);
 };
