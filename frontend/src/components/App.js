@@ -20,7 +20,11 @@ function App() {
   const history = useHistory();
 
   // Context for Current User
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({
+    name: '',
+    about: '',
+    avatar: avatar,
+  });
 
   const [cards, setCards] = useState([]);
 
@@ -174,7 +178,7 @@ function App() {
           console.log(err);
         });
     }
-  }, [jwt, api, CurrentUserContext]);
+  }, [jwt, api]);
 
   // API CALLS
   // const handleCardLike = (card) => {
@@ -212,6 +216,7 @@ function App() {
       .deleteCard(card._id, jwt)
       .then(() => {
         setCards((state) => state.filter((c) => c._id !== card._id));
+        closeAllPopups();
       })
       .catch((err) => console.error(err));
   };
@@ -220,7 +225,8 @@ function App() {
     api
       .setUserInfo({ name, about }, jwt)
       .then((data) => {
-        setCurrentUser({ ...data, name, about });
+        setCurrentUser({ name, about, ...data });
+        closeAllPopups();
       })
       .catch((err) => console.error(err));
   };
@@ -229,7 +235,8 @@ function App() {
     api
       .setUserAvatar(avatar, jwt)
       .then((data) => {
-        setCurrentUser({ ...data, avatar });
+        setCurrentUser({ avatar, ...data });
+        closeAllPopups();
       })
       .catch((err) => console.error(err));
   };
@@ -239,6 +246,7 @@ function App() {
       .addCard({ name, link }, jwt)
       .then((card) => {
         setCards([card.data, ...cards]);
+        closeAllPopups();
       })
       .catch((err) => console.error(err));
   };
