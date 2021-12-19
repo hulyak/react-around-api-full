@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { useContext } from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 const Card = ({
   card,
@@ -16,7 +16,9 @@ const Card = ({
   const isOwn = card.owner._id === currentUser._id;
 
   // Check if the card was liked by the current user
-  const isLiked = card.likes.some((i) => i._id === currentUser._id);
+  // const isLiked = card.likes.some((i) => i._id === currentUser._id);
+  const isLiked =
+    card.likes !== undefined ? card.likes.includes(currentUser._id) : false;
 
   const handleDeleteSubmit = (evt) => {
     evt.preventDefault();
@@ -28,8 +30,8 @@ const Card = ({
       <button
         className={`element__delete-button ${
           isOwn
-            ? "element__delete-button"
-            : "element__delete-button_type_hidden"
+            ? 'element__delete-button'
+            : 'element__delete-button_type_hidden'
         }`}
         aria-label="Delete button"
         type="button"
@@ -46,7 +48,7 @@ const Card = ({
           <button
             type="button"
             className={`element__like-button ${
-              isLiked ? "element__like-button_active" : "element__like-button"
+              isLiked ? 'element__like-button_active' : 'element__like-button'
             }`}
             onClick={() => onCardLike(card)}
           />
