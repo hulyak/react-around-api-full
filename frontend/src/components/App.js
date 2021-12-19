@@ -202,7 +202,7 @@ function App() {
     const isLiked = card.likes.some((i) => i === currentUser._id);
     // Send a request to the API and getting the updated card data
     api
-      .changeLikeCardStatus(card._id, !isLiked, jwt)
+      .changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) =>
           state.map((c) => (c._id === card._id ? newCard : c))
