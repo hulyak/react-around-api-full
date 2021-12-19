@@ -1,13 +1,7 @@
 import { useContext } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-const Card = ({
-  card,
-  onCardClick,
-  onCardLike,
-  onCardDelete,
-  onConfirmDeleteClick,
-}) => {
+const Card = ({ card, onCardClick, onCardLike, onCardDelete }) => {
   // const { _id, name, description, imageUrl, isConfirmed } = card;
 
   const currentUser = useContext(CurrentUserContext);
@@ -16,13 +10,13 @@ const Card = ({
   const isOwn = card.owner === currentUser._id;
 
   // Check if the card was liked by the current user
-  // const isLiked = card.likes.some((i) => i._id === currentUser._id);
-  const isLiked =
-    card.likes !== undefined ? card.likes.includes(currentUser._id) : false;
+  const isLiked = card.likes.some((i) => i === currentUser._id);
+  // const isLiked =
+  //   card.likes !== undefined ? card.likes.includes(currentUser._id) : false;
 
   const handleDeleteSubmit = (evt) => {
     evt.preventDefault();
-    onCardDelete(card._id);
+    onCardDelete(card);
   };
 
   return (
