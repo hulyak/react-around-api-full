@@ -160,7 +160,7 @@ function App() {
   useEffect(() => {
     if (jwt) {
       api
-        .getUserData(jwt)
+        .getUserData()
         .then((res) => {
           setCurrentUser(res.data);
           console.log('user', res.data);
@@ -186,8 +186,8 @@ function App() {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     // Send a request to the API and getting the updated card data
     const handleLike = !isLiked
-      ? api.addLike(card._id, jwt)
-      : api.deleteLike(card._id, jwt);
+      ? api.addLike(card._id)
+      : api.deleteLike(card._id);
 
     handleLike
       .then((newCard) => {
@@ -200,7 +200,7 @@ function App() {
 
   const handleCardDelete = (card) => {
     api
-      .deleteCard(card._id, jwt)
+      .deleteCard(card._id)
       .then(() => {
         setCards((state) => state.filter((c) => c._id !== card._id));
         closeAllPopups();
@@ -210,7 +210,7 @@ function App() {
 
   const handleUpdateUser = ({ name, about }) => {
     api
-      .setUserInfo({ name, about }, jwt)
+      .setUserInfo({ name, about })
       .then((data) => {
         setCurrentUser({ name, about, ...data });
         closeAllPopups();
@@ -220,7 +220,7 @@ function App() {
 
   const handleUpdateAvatar = (avatar) => {
     api
-      .setUserAvatar(avatar, jwt)
+      .setUserAvatar(avatar)
       .then((data) => {
         setCurrentUser({ avatar, ...data });
         closeAllPopups();
@@ -230,7 +230,7 @@ function App() {
 
   const handleAddPlaceSubmit = ({ name, link }) => {
     api
-      .addCard({ name, link }, jwt)
+      .addCard({ name, link })
       .then((card) => {
         setCards([card.data, ...cards]);
         closeAllPopups();

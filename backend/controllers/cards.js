@@ -30,7 +30,7 @@ const deleteCard = (req, res, next) => {
       if (!card) {
         throw new NotFoundError("No card found with that id");
       }
-      if (!card.owner._id !== req.user._id) {
+      if (card.owner.toString() !== req.user._id) {
         throw new ForbiddenError("You are not the owner of this card");
       }
       res.status(200).send({
