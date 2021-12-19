@@ -65,7 +65,7 @@ const likeCard = (req, res, next) => {
 const deleteLikeCard = (req, res, next) => {
   const { _id } = req.params;
 
-  return Card.findByIdAndRemove(
+  return Card.findByIdAndUpdate(
     _id,
     { $pull: { likes: req.user._id } },
     { new: true }

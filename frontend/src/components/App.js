@@ -178,12 +178,13 @@ function App() {
           console.log(err);
         });
     }
-  }, [jwt, api, CurrentUserContext]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jwt, CurrentUserContext]);
 
   // API CALLS
   const handleCardLike = (card) => {
     // Check one more time if this card was already liked
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
     // Send a request to the API and getting the updated card data
     const handleLike = !isLiked
       ? api.addLike(card._id)
