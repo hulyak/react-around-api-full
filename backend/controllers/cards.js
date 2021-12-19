@@ -57,7 +57,7 @@ const likeCard = (req, res, next) => {
       const {
         _doc: { ...props },
       } = card;
-      res.status(200).send({ data: props });
+      res.status(200).send(props);
     })
     .catch(next);
 };
@@ -79,7 +79,7 @@ const deleteLikeCard = (req, res, next) => {
       const {
         _doc: { ...props },
       } = card;
-      res.status(200).send({ data: props });
+      res.status(200).send(props);
     })
     .catch(next);
 };

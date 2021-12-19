@@ -13,7 +13,7 @@ const Card = ({
   const currentUser = useContext(CurrentUserContext);
 
   // Checking if the current user is the owner of the current card
-  const isOwn = card.owner._id === currentUser._id;
+  const isOwn = card.owner === currentUser._id;
 
   // Check if the card was liked by the current user
   // const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -22,7 +22,7 @@ const Card = ({
 
   const handleDeleteSubmit = (evt) => {
     evt.preventDefault();
-    onCardDelete(card);
+    onCardDelete(card._id);
   };
 
   return (
@@ -52,7 +52,9 @@ const Card = ({
             }`}
             onClick={() => onCardLike(card)}
           />
-          <p className="element__like-count">{card.likes.length}</p>
+          <p className="element__like-count">
+            {card.likes !== undefined && card.likes.length}
+          </p>
         </div>
       </div>
     </li>

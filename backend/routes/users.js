@@ -32,7 +32,7 @@ const validateURL = (value, helpers) => {
 };
 
 usersRouter.get(
-  "/:id",
+  "/:_id",
   celebrate({
     body: Joi.object().keys({
       id: Joi.string().required().hex().length(24),
