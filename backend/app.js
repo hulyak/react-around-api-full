@@ -27,12 +27,6 @@ app.use(helmet());
 
 app.use(requestLogger); // enabling the request logger
 
-app.get("/crash-test", () => {
-  setTimeout(() => {
-    throw new Error("Server will crash now");
-  }, 0);
-});
-
 app.post(
   "/signin",
   celebrate({
