@@ -3,6 +3,7 @@
 This is an interactive page that the user can create an account, edit profile information, add like/dislike/add/remove photo cards. They can also see other users' photos and like other users' photos.
 
 Frontend: React
+
 Backend: Node.js, using Express, and MongoDB.
 
 ## Features
