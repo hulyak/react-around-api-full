@@ -1,0 +1,6 @@
+@media screen and (min-width: 768px) {
+  .header__center {
+    max-width: 1170px;
+    display: flex;
+  }
+}

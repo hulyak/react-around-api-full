@@ -5,11 +5,11 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  height: 0;
+  overflow: hidden;
+  transition: all 0.3s linear;
 }
 
-@media only screen and (max-width: 515px) {
-  .header__nav {
-    
-   
-  }
+.show-nav {
+  height: 100px;
 }
